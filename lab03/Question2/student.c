@@ -27,5 +27,5 @@ struct ListNode* swapPairs(struct ListNode* head) {
             current = nextPair;
       }
 
-      return newHead; // Return the new head of the list
+      return newHead; // Return the new head list
 }
