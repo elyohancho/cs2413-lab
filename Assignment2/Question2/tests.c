@@ -251,3 +251,83 @@ int main(void) {
         return 1;
     }
 }
+
+static bool test_bst_violation_deep_left_subtree() {
+    //       10
+    //      /  \
+    //     5    15
+    //      \
+    //      12   (violates: 12 is in left subtree of 10 but > 10)
+    struct TreeNode* root = node_new(10);
+    root->left = node_new(5);
+    root->right = node_new(15);
+    root->left->right = node_new(12);
+    CHECK(isAVL(root) == false);
+    tree_free(root);
+    return true;
+}
+
+static bool test_duplicate_not_allowed() {
+    //  2
+    // / \
+    //1   2  (duplicate on right)
+    struct TreeNode* root = node_new(2);
+    root->left = node_new(1);
+    root->right = node_new(2);
+    CHECK(isAVL(root) == false);
+    tree_free(root);
+    return true;
+}
+
+static bool test_valid_with_boundaries() {
+    //      0
+    //     / \
+    // INT_MIN INT_MAX
+    struct TreeNode* root = node_new(0);
+    root->left = node_new(INT_MIN);
+    root->right = node_new(INT_MAX);
+    CHECK(isAVL(root) == true);
+    tree_free(root);
+    return true;
+}
+
+static bool test_invalid_boundary_in_left_subtree() {
+    //       0
+    //      / \
+    //   INT_MIN  10
+    //        \
+    //        INT_MAX   (violates BST: INT_MAX in left subtree of 0)
+    struct TreeNode* root = node_new(0);
+    root->left = node_new(INT_MIN);
+    root->right = node_new(10);
+    root->left->right = node_new(INT_MAX);
+    CHECK(isAVL(root) == false);
+    tree_free(root);
+    return true;
+}
+
+int main(void) {
+    printf("Question 2 — AVL Check: running tests...\n");
+
+    RUN_TEST(test_empty_tree);
+    RUN_TEST(test_single_node);
+    RUN_TEST(test_valid_avl_small);
+    RUN_TEST(test_valid_avl_larger_balanced);
+    RUN_TEST(test_bst_but_not_avl_unbalanced_chain);
+    RUN_TEST(test_bst_but_not_avl_lower_imbalance);
+    RUN_TEST(test_balanced_but_not_bst);
+    RUN_TEST(test_bst_violation_deep_right_subtree);
+    RUN_TEST(test_bst_violation_deep_left_subtree);
+    RUN_TEST(test_duplicate_not_allowed);
+    RUN_TEST(test_valid_with_boundaries);
+    RUN_TEST(test_invalid_boundary_in_left_subtree);
+
+    printf("\nSummary: %d run, %d failed\n", g_tests_run, g_tests_failed);
+    if (g_tests_failed == 0) {
+        printf("Question 2: All tests passed.\n");
+        return 0;
+    } else {
+        printf("Question 2: Some tests failed.\n");
+        return 1;
+    }
+}

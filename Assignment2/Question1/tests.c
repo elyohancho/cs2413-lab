@@ -7,9 +7,8 @@
  * This test runner prints which test cases PASS/FAIL and continues
  * running after failures (no assert-abort style).
  */
-
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 
 struct TreeNode {
