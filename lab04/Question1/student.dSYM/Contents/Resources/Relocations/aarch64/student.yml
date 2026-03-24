@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/johannmiranda/CS2413/lab04/Question1/student'
+relocations:     []
+...

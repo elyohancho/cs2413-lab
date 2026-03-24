@@ -1,52 +1,44 @@
-#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-/*
-Question 1: Maximum Depth of Binary Tree
-
-Given the root of a binary tree, return its maximum depth.
-
-The maximum depth is the number of nodes along the longest path
-from the root node down to the farthest leaf node.
-
-Examples:
-
-Example 1:
-Input:
-        1
-       / \
-      2   3
-Output: 2
-
-Example 2:
-Input:
-        1
-       /
-      2
-     /
-    3
-Output: 3
-
-Example 3:
-Input: empty tree
-Output: 0
-
-Function to complete:
-    int maxDepth(struct TreeNode* root);
-
-Note:
-- If the tree is empty, return 0.
-- A tree with only one node has depth 1.
-*/
-
-/*
- * Definition for a binary tree node.
- */
+/* Tree Node */
 struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
 };
 
+/* Create Node */
+struct TreeNode* createNode(int val) {
+    struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    node->val = val;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+/* Max Depth */
 int maxDepth(struct TreeNode* root) {
-  // TODO: implement
+    if (root == NULL) return 0;
+
+    int left = maxDepth(root->left);
+    int right = maxDepth(root->right);
+
+    return (left > right ? left : right) + 1;
+}
+
+int main() {
+    /*
+        1
+       / \
+      2   3
+    */
+
+    struct TreeNode* root = createNode(1);
+    root->left = createNode(2);
+    root->right = createNode(3);
+
+    printf("Max Depth: %d\n", maxDepth(root)); // 2
+
+    return 0;
 }
