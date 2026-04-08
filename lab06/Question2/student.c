@@ -7,13 +7,19 @@
 // Graph* g is a pointer to a Graph struct, which contains a 2D array adj[MAX_NODES][MAX_NODES]. 
 // The value at adj[u][v] is 1 if there is an edge between nodes u and v, and 0 otherwise.
 
-
-
-
 int count_isolated(Graph* g) {
-    // TODO: implement
-    // return -1;
-   
+    if (!g) return 0;
+
+    // Use MAX_NODES (defined in graph.h) because Graph does not have a field 'n'.
+    int count = 0;
+    for (int u = 0; u < MAX_NODES; ++u) {
+        int isolated = 1;
+        for (int v = 0; v < MAX_NODES; ++v) {
+            if (g->adj[u][v]) { isolated = 0; break; }
+        }
+        if (isolated) ++count;
+    }
+    return count;
 }
 
 

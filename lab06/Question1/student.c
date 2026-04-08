@@ -11,9 +11,14 @@
 
 
 int count_edges(Graph* g) {
-    // TODO: implement
-    // return -1;
-
+    if (!g) return -1;
+    int count = 0;
+    for (int u = 0; u < MAX_NODES; ++u) {
+        for (int v = u + 1; v < MAX_NODES; ++v) {
+            if (g->adj[u][v]) ++count;
+        }
+    }
+    return count;
 }
 
 
